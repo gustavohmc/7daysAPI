@@ -3,6 +3,8 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -19,7 +21,9 @@ public class Main {
 		String json = response.body();
 		
 		String[] tvShows = parseJson(json);
-		System.out.println(tvShows[12]);
+		
+		List<String> titles = parseTitles(tvShows);
+		titles.forEach(System.out::println);
 	}
 	
 	private static String[] parseJson(String json) {
@@ -28,5 +32,12 @@ public class Main {
 		return results;
 	}
 	
+	private static List<String> parseTitles(String[] shows){
+		List<String> results = new ArrayList<>();
+		for(int i=0;i<shows.length;i++) {
+			results.add(StringUtils.substringBetween(shows[i], "title\":\"", "\""));			
+		}
+		return results;
+	}
 
 }
