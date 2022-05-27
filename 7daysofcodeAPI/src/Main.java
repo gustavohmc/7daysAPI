@@ -22,7 +22,7 @@ public class Main {
 		
 		String[] tvShows = parseJson(json);
 		
-		List<String> titles = parseTitles(tvShows);
+		List<String> titles = parseItem(tvShows, "title");
 		titles.forEach(System.out::println);
 	}
 	
@@ -32,10 +32,11 @@ public class Main {
 		return results;
 	}
 	
-	private static List<String> parseTitles(String[] shows){
+	private static List<String> parseItem(String[] shows, String item){
 		List<String> results = new ArrayList<>();
+		String pattern = item + "\":\"";
 		for(int i=0;i<shows.length;i++) {
-			results.add(StringUtils.substringBetween(shows[i], "title\":\"", "\""));			
+			results.add(StringUtils.substringBetween(shows[i], pattern, "\""));			
 		}
 		return results;
 	}
