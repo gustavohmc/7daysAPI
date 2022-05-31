@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -11,7 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 public class Main {
 
 	public static void main(String[] args) throws IOException, InterruptedException {
-		String apiKey = "key";
+		String apiKey = "apikey";
 		URI apiIMDB = URI.create("https://imdb-api.com/en/API/Top250TVs/" + apiKey);
 		
 		HttpClient client = HttpClient.newHttpClient();
@@ -23,7 +24,12 @@ public class Main {
 		String[] tvShows = parseJson(json);
 		
 		List<Show> tvShowsList = showListBuilder(tvShows);
-		tvShowsList.forEach(System.out::println);
+
+		PrintWriter pw = new PrintWriter("../index.html");
+		
+		new HtmlGenerator(pw).generate(tvShowsList);
+		
+		pw.close();
 	}
 	
 	private static String[] parseJson(String json) {
@@ -45,8 +51,8 @@ public class Main {
 			title = parseItem(shows, "title", i);
 			imageURL = parseItem(shows, "image", i);
 			year = parseItem(shows, "year", i);
-			rating = parseItem(shows, "Rating", i)
-;			results.add(new Show(title, imageURL, year, rating));
+			rating = parseItem(shows, "Rating", i);
+			results.add(new Show(title, imageURL, year, rating));
 		}
 		return results;
 	}

@@ -17,4 +17,22 @@ public class Show {
 	public String toString() {
 		return ("[TITLE: " + this.title + ", YEAR: " + this.year + ", RATING: " + this.rating + "]");
 	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public String getImageURL() {
+		return imageURL;
+	}
+
+	public String getYear() {
+		return year;
+	}
+
+	public String getRating() {
+		return rating;
+	}
+	
+	
 }
